@@ -2,11 +2,11 @@
 Django==5.2.1
 gunicorn==23.0.0
 
-# Data Science - Compatible versions
+# Data Science - Compatible versions with pre-built wheels
 numpy==1.26.4
 scikit-learn==1.5.2
 pandas==2.2.3
-scipy==1.14.0
+scipy==1.12.0  # Version with pre-built wheels
 
 # Image Processing
 opencv-python-headless==4.10.0.84
