@@ -86,7 +86,7 @@ def user_contact(request):
         ncontact = contact(name=name, email=email, phone=phone, desc=desc)
         ncontact.save()
         messages.success(request, "Your message has been sent successfully!")
-        return redirect('shop:contact')
+        return redirect('shop:contact')  # ✅ Fixed: added 'shop:'
     return render(request, 'shop/contactus.html')
 
 @login_required
@@ -173,7 +173,7 @@ def user_login(request):
     # If user is already logged in, redirect to service
     if request.user.is_authenticated:
         messages.info(request, f"You are already logged in as {request.user.username}")
-        return redirect('shop:service')
+        return redirect('shop:service')  # ✅ Fixed: added 'shop:'
     
     if request.method == 'POST':
         loginusername = request.POST.get('loginusername', '').strip()
@@ -181,36 +181,35 @@ def user_login(request):
         
         if not loginusername or not loginpassword:
             messages.error(request, "Please enter both username and password.")
-            return redirect('shop:login')
+            return render(request, 'shop/login.html')
         
         # Check if user exists
         try:
             user_exists = User.objects.filter(username=loginusername).exists()
             if not user_exists:
                 messages.error(request, 'Invalid Credentials. Please Enter Valid Credentials.')
-                return redirect('shop:login')
+                return render(request, 'shop/login.html')
         except Exception:
             messages.error(request, 'Invalid Credentials. Please Enter Valid Credentials.')
-            return redirect('shop:login')
+            return render(request, 'shop/login.html')
         
         # Authenticate user
         user = authenticate(request, username=loginusername, password=loginpassword)
         
         if user is not None:
             ln(request, user)
-            # Set session to persist
             request.session.set_expiry(1209600)  # 2 weeks
             
             # Check if user is active
             if user.is_active:
                 messages.success(request, f"Successfully Logged In. Welcome {user.username}!")
-                return redirect('shop:service')
+                return redirect('shop:service')  # ✅ Fixed: added 'shop:'
             else:
                 messages.error(request, "Your account is disabled. Please contact support.")
-                return redirect('shop:login')
+                return render(request, 'shop/login.html')
         else:
             messages.error(request, 'Invalid Credentials. Please Enter Valid Credentials.')
-            return redirect('shop:login')
+            return render(request, 'shop/login.html')
     
     return render(request, 'shop/login.html')
 
@@ -220,12 +219,12 @@ def user_logout(request):
     request.session.flush()
     logout(request)
     messages.success(request, "You have been logged out successfully.")
-    return redirect('shop:login')
+    return redirect('shop:login')  # ✅ Fixed: added 'shop:'
 
 def user_signup(request):
     """User registration view"""
     if request.user.is_authenticated:
-        return redirect('shop:service')
+        return redirect('shop:service')  # ✅ Fixed: added 'shop:'
     
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
@@ -238,37 +237,37 @@ def user_signup(request):
         # Validate inputs
         if not all([username, fname, email, password1, password2]):
             messages.error(request, "All fields are required.")
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
         
         if len(username) < 3:
             messages.error(request, 'Username must be at least 3 characters long')
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
         
         if len(username) > 30:
             messages.error(request, 'Username must be less than 30 characters')
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
         
         if not username.isalnum():
             messages.error(request, 'Username must be Alphanumeric')
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
             
         if password1 != password2:
             messages.error(request, "Password doesn't match")
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
         
         if len(password1) < 6:
             messages.error(request, "Password must be at least 6 characters long")
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
         
         # Check if username already exists
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists. Please choose a different username.")
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
         
         # Check if email already exists
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email already registered. Please use a different email.")
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
         
         try:
             myuser = User.objects.create_user(
@@ -281,10 +280,10 @@ def user_signup(request):
             myuser.save()
             
             messages.success(request, 'Your account has been created successfully! Please login.')
-            return redirect('shop:login')
+            return redirect('shop:login')  # ✅ Fixed: added 'shop:'
         except Exception as e:
             messages.error(request, f'Error creating account: {str(e)}')
-            return redirect('shop:signup')
+            return redirect('shop:signup')  # ✅ Fixed: added 'shop:'
     
     return render(request, 'shop/signup.html')
 
@@ -309,7 +308,7 @@ def delete_history(request):
                     messages.error(request, "Record not found or permission denied.")
             else:
                 messages.error(request, "Invalid history ID.")
-    return redirect('shop:history')
+    return redirect('shop:history')  # ✅ Fixed: added 'shop:'
 
 # Debug view - optional, remove in production
 def debug_models(request):
