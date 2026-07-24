@@ -30,7 +30,12 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-h3my0n)10#0dad
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # ALLOWED_HOSTS - Read from environment variable or use defaults
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0').split(',')
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'hamrokrishi.onrender.com',  # Your Render URL
+    '.onrender.com',  # This will allow any Render subdomain (useful for previews)
+]
 
 # CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://hamrokrishi.onrender.com').split(',')
