@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Crop Prediction Result</title>
+</head>
+
+<body>
+    {% if prediction %}
+    <h2>🌾 Recommended Crop: <span style="color:green;">{{ prediction }}</span></h2>
+    {% elif error %}
+    <h2 style="color: red;">Error: {{ error }}</h2>
+    {% else %}
+    <h2>No prediction made.</h2>
+    {% endif %}
+    <a href="/shop/service/">Try Again</a>
+</body>
+
+</html>

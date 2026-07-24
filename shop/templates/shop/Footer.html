@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Footer</title>
+</head>
+<style>
+  .footer {
+    background-color: rgb(225, 243, 225);
+    padding: 40px 30px 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+
+  /* Inner layout container */
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  /* Each footer section */
+  .footer-section {
+    flex: 1 1 220px;
+    margin-bottom: 20px;
+  }
+
+  /* Section titles */
+  .footer-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: rgb(3, 110, 3);
+
+  }
+
+  /* Paragraph text */
+  .footer-text {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  /* Navigation menu inside Quick Links */
+  .footer-nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer-nav-link {
+    text-decoration: none;
+    color: rgb(37, 39, 37);
+    font-weight: bold;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  .footer-nav-link:hover {
+    color: green;
+  }
+
+  /* Social media links */
+  .footer-social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-social-link {
+    text-decoration: none;
+    color: rgb(22, 30, 24);
+    font-weight: bold;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  .footer-social-link:hover {
+    color: darkgreen;
+  }
+
+  /* Bottom bar */
+  .footer-bottom-bar {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-section {
+      width: 100%;
+    }
+
+    .footer-social-links {
+      flex-direction: row;
+      gap: 15px;
+    }
+  }
+</style>
+
+<body>
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- Contact Section -->
+      <div class="footer-section">
+        <h3 class="footer-title">Contact Us</h3>
+        <p class="footer-text">Email: hamrokrishi@gmail.com</p>
+        <p class="footer-text">Phone: +977-9800000000</p>
+        <p class="footer-text">Address: Chitwan, Nepal</p>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-title">Quick Links</h3>
+        <a href="/shop/about/" class="footer-nav-link">About Us</a> <br>
+        <a href="/shop/service/" class="footer-nav-link">Our Services</a><br>
+        <a href="/shop/contactus/" class="footer-nav-link">Contact Us</a>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-title"> Follow Us</h3>
+        <div class="footer-social-links">
+          <a href="https://facebook.com" target="_blank" class="footer-social-link">Facebook</a>
+          <a href="https://twitter.com" target="_blank" class="footer-social-link">Twitter</a>
+          <a href="https://instagram.com" target="_blank" class="footer-social-link">Instagram</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom-bar">
+      ©
+      <script>document.write(new Date().getFullYear())</script> Crop AI. All rights reserved.
+      <a href="/shop/terms/" style="color: green;">Terms & Privacy</a>
+    </div>
+  </footer>
+</body>
+
+</html>

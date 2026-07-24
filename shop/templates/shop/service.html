@@ -1,0 +1,530 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Meta tag for character encoding -->
+  <meta charset="utf-8">
+  <!-- Meta tag for responsive layout on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Title of the webpage -->
+  <title>Home - Crop Recommendation</title>
+  <!-- Link to custom CSS file -->
+  <link rel="stylesheet" href="/static/css/base.css">
+  <!-- Link to Bootstrap 5 CSS via CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Navigation bar starts -->
+  <nav class="navbar navbar-expand-lg navbar-green">
+    <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
+
+      <!-- Brand logo (in Nepali) -->
+      <a class="navbar-brand nepali-text text-white" href="#">हाम्रो कृषि</a>
+
+      <!-- Toggler button for responsive navbar -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <!-- Home link -->
+          <li class="nav-item {% if request.path == '/shop/home/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/shop/home/">Home</a>
+          </li>
+          <!-- Services link -->
+          <li class="nav-item {% if request.path == '/shop/service/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/shop/service/">Services</a>
+          </li>
+          <!-- Contact Us link -->
+          <li class="nav-item {% if request.path == '/shop/contactus/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/shop/contactus/">Contact Us</a>
+          </li>
+          <!-- Dropdown menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              More
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/shop/history/">History</a></li>
+              <li><a class="dropdown-item" href="/shop/about/">About</a></li>
+            </ul>
+          </li>
+          <!-- Logout link -->
+          <li class="nav-item {% if request.path == '/shop/login/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/shop/login/">Logout</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Show welcome message only if user is logged in -->
+      {% if user.is_authenticated %}
+      <span class="navbar-text welcome-user mt-2 mt-lg-0 ms-3">
+        Welcome {{ request.user.username }}
+      </span>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- Script to hide flash messages after 3 seconds -->
+  <script>
+    setTimeout(function () {
+      var flash = document.getElementById('flash-message');
+      if (flash) {
+        flash.style.display = 'none';
+      }
+    }, 3000);
+  </script>
+
+  <!-- Django block tag to allow child templates to inject content -->
+  {% block body %}
+
+  <!-- Main form wrapper -->
+  <div>
+    <form method="post" action="/shop/service/" id="cropForm" class="form-style">
+      {% csrf_token %}
+      <!-- Wrapper div with background image -->
+      <div class="wrapper">
+        <div class="container">
+          <!-- Header text -->
+          <h2 class="header">
+            Enter your soil and climate parameters to get personalized crop recommendations
+          </h2>
+
+          <!-- Grid layout for input fields -->
+          <div class="grid">
+
+            <!-- Nitrogen input -->
+            <div class="input-box">
+              <label for="N" class="label">Nitrogen (N) - kg/ha</label>
+              <input type="range" name="N" id="N" min="0" max="140" step="1" value="{{ N }}" />
+              <input type="number" name="N" id="nitrogen_num" min="0" max="140" step="1" value="{{ N }}" />
+              <small class="note">Soil nitrogen content (0–140 kg/ha)</small>
+            </div>
+
+            <!-- Phosphorus input -->
+            <div class="input-box">
+              <label for="P" class="label">Phosphorus (P) - kg/ha</label>
+              <input type="range" name="P" id="P" min="5" max="145" step="1" value="{{ P }}" />
+              <input type="number" name="P" id="phosphorus_num" min="5" max="145" step="1" value="{{ P }}" />
+              <small class="note">Soil phosphorus content (5–145 kg/ha)</small>
+            </div>
+
+            <!-- Potassium input -->
+            <div class="input-box">
+              <label for="K" class="label">Potassium (K) - kg/ha</label>
+              <input type="range" name="K" id="K" min="5" max="205" step="1" value="{{ K }}" />
+              <input type="number" name="K" id="potassium_num" min="5" max="205" step="1" value="{{ K }}" />
+              <small class="note">Soil potassium content (5–205 kg/ha)</small>
+            </div>
+
+            <!-- Temperature input -->
+            <div class="input-box">
+              <label for="temperature" class="label">Temperature (°C)</label>
+              <input type="range" name="temperature" id="temperature" min="8" max="44" step="0.1"
+                value="{{ temperature }}" />
+              <input type="number" name="temperature" id="temperature_num" min="8" max="44" step="0.1"
+                value="{{ temperature }}" />
+              <small class="note">Average temperature (8–44 °C)</small>
+            </div>
+
+            <!-- Humidity input -->
+            <div class="input-box">
+              <label for="humidity" class="label">Humidity (%)</label>
+              <input type="range" name="humidity" id="humidity" min="14" max="100" step="0.1" value="{{ humidity }}" />
+              <input type="number" name="humidity" id="humidity_num" min="14" max="100" step="0.1"
+                value="{{ humidity }}" />
+              <small class="note">Relative humidity (14–100%)</small>
+            </div>
+
+            <!-- pH input -->
+            <div class="input-box">
+              <label for="PH" class="label">pH Value</label>
+              <input type="range" name="pH" id="pH" min="3.5" max="10" step="0.1" value="{{ pH }}" />
+              <input type="number" name="pH" id="ph_num" min="3.5" max="10" step="0.1" value="{{ pH }}" />
+              <small class="note">Soil pH level (3.5–10)</small>
+            </div>
+
+            <!-- Rainfall input -->
+            <div class="input-box">
+              <label for="rainfall" class="label">Rainfall (mm)</label>
+              <input type="range" name="rainfall" id="rainfall" min="20" max="300" step="0.10" value="{{ rainfall }}" />
+              <input type="number" name="rainfall" id="rainfall_num" min="20" max="300" step="0.1"
+                value="{{ rainfall }}" />
+              <small class="note">Annual rainfall (20–300 mm)</small>
+            </div>
+
+          </div>
+
+          <!-- Submit button -->
+          <div class="content-center">
+            <button type="submit" id="submitBtn">Get Recommendation</button>
+          </div>
+
+          <!-- Display crop details if available -->
+          {% if crop_detail %}
+          <div class="crop-detail-box">
+            <h3>🌾 Recommended Crop: <strong>{{ crop_detail.name|title }}</strong></h3>
+            <img src="{{ crop_detail.image.url }}" alt="{{ crop_detail.name }}" class="crop-image">
+            <p><strong>Description:</strong> {{ crop_detail.description }}</p>
+            <p><strong>Best Season:</strong> {{ crop_detail.best_season }}</p>
+            <p><strong>Common Pests & Diseases:</strong> {{ crop_detail.common_pests_diseases }}</p>
+            <p><strong>Recommended Fertilizer:</strong> {{ crop_detail.recommended_fertilizer }}</p>
+          </div>
+          {% endif %}
+
+          <!-- JavaScript to sync range and number inputs -->
+          <script>
+            function syncInputs(rangeId, numberId) {
+              const range = document.getElementById(rangeId);
+              const number = document.getElementById(numberId);
+              range.addEventListener('input', () => number.value = range.value);
+              number.addEventListener('input', () => {
+                let val = Number(number.value);
+                if (val < range.min) val = range.min;
+                if (val > range.max) val = range.max;
+                number.value = val;
+                range.value = val;
+              });
+            }
+
+            // Call sync function for all fields
+            syncInputs('N', 'nitrogen_num');
+            syncInputs('P', 'phosphorus_num');
+            syncInputs('K', 'potassium_num');
+            syncInputs('temperature', 'temperature_num');
+            syncInputs('humidity', 'humidity_num');
+            syncInputs('pH', 'ph_num');
+            syncInputs('rainfall', 'rainfall_num');
+          </script>
+
+        </div>
+      </div>
+    </form>
+    </dev>
+
+    {% endblock %}
+
+    <!-- Include Footer -->
+    {% include 'shop/Footer.html' %}
+  </div>
+</body>
+<!-- Bootstrap JS and dependencies (for Bootstrap 5) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="..."></script>
+
+</html>
+<style>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  .navbar-green h1.nepali-text {
+    color: #ffffff;
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+    font-family: 'Khand', sans-serif;
+    /* or any Nepali-supporting font */
+  }
+
+  .navbar-green h1.nepali-text {
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    font-family: 'Khand', sans-serif;
+    /* or any Nepali-supporting font */
+  }
+
+  .crop-detail-box {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: #f0fdf4;
+    border-left: 5px solid #16a34a;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #1e3a8a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .crop-detail-box h3 {
+    color: #064e3b;
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .crop-detail-box img.crop-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin: 1rem auto;
+    display: block;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .crop-detail-box p {
+    margin: 0.6rem 0;
+    font-size: 1rem;
+    color: #334155;
+    padding-left: 10px;
+  }
+
+  .crop-detail-box p strong {
+    color: #0f766e;
+  }
+
+  /* Wrapper styles */
+  .wrapper {
+    background-image: url({% static "shop/agricl.png" %});
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 50vh;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Container box */
+  .container {
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    max-width: 850px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    color: #065f46;
+    margin-bottom: 2rem;
+  }
+
+  /* Grid layout for form fields */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .navbar-green {
+    background-color: #198754;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-toggler {
+    background-color: rgb(78, 126, 78);
+    border: none;
+  }
+
+  .navbar-nav .nav-link {
+    color: #fff !important;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+  }
+
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-item.active .nav-link {
+    background-color: #14532d;
+    border-radius: 6px;
+  }
+
+  .dropdown-menu {
+    background-color: #f0fdf4;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .dropdown-item {
+    color: #1e3a8a;
+    font-weight: 500;
+  }
+
+  .dropdown-item:hover {
+    background-color: #bbf7d0;
+    color: #065f46;
+  }
+
+  .welcome-user {
+    color: #e0f2f1;
+    font-weight: 600;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 8px;
+  }
+
+
+  .welcome-container {
+    background-color: rgb(235, 228, 228);
+    padding: 40px;
+    margin: 5px auto;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(199, 250, 215, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+
+  .welcome-container p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+
+
+  }
+
+  .welcome-container a {
+    color: rgb(168, 239, 199);
+    font-weight: bold;
+    text-decoration: none;
+
+  }
+
+  .welcome-container a:hover {
+    text-decoration: underline;
+  }
+
+  .btn-primary {
+    padding: 0.75rem 2rem;
+    background-color: rgb(23, 141, 64);
+    color: white;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-decoration: none;
+  }
+
+  .welcome-user {
+    color: #e0f2f1;
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    display: inline-block;
+  }
+
+  .welcome-user:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    cursor: default;
+  }
+
+  /* Individual input container */
+  .input-box {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Label styling */
+  .label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* Range input styling */
+  input[type="range"] {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Number input styling */
+  input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  /* Note text under inputs */
+  .note {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+
+  /* Submit button */
+  #submitBtn {
+    width: 200px;
+    height: 50px;
+    font-size: 16px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* Centered button container */
+  .content-center {
+    text-align: center;
+    margin-top: 20px;
+    color: rgb(4, 117, 30);
+  }
+
+  /* Recommendation result box */
+  .result {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: #1e3a8a;
+    font-size: 1.2rem;
+    background-color: #d1fae5;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #065f46;
+  }
+
+  /* Error box */
+  .error {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: #b91c1c;
+    font-size: 1rem;
+    background-color: #fee2e2;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dc2626;
+  }
+
+  /* Final result box */
+  .result-box {
+    text-align: center;
+    margin: 20px auto;
+    padding: 15px 25px;
+    width: fit-content;
+    background-color: #f0f8ff;
+    border: 2px solid #28a745;
+    border-radius: 10px;
+    font-size: 1.2rem;
+  }
+</style>

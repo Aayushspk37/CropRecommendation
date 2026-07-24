@@ -1,0 +1,211 @@
+{% comment %} {%extends 'shop/basic.html'%} {% endcomment %}
+
+{% comment %} {%block title%} Login page {%endblock%} {% endcomment %}
+{%block body%}
+{% load static%}
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-image: url({%static "shop/agricl.png"%});
+    /* Replace with your farm image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-container {
+    background: rgba(0, 100, 0, 0.85);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    width: 350px;
+    text-align: center;
+  }
+
+  .login-container h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .login-container p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .login-container input {
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+  }
+
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #004d00;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+  }
+
+  .login-container button:hover {
+    background-color: #007e00;
+  }
+
+  .login-container a {
+    display: block;
+    color: #ddd;
+    margin-top: 10px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .login-container a:hover {
+    text-decoration: underline;
+  }
+
+  .create-account {
+    margin-top: 15px;
+    background-color: #ffffff33;
+    padding: 10px;
+    border-radius: 8px;
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .create-account:hover {
+    background-color: #ffffff55;
+  }
+
+  footer {
+    background-color: #2e8b57;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
+
+  #message-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .flash-message {
+    position: relative;
+    padding: 15px 40px 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .flash-message.success {
+    background-color: #4CAF50;
+    /* green */
+  }
+
+  .flash-message.error {
+    background-color: #f44336;
+    /* red */
+  }
+
+  .flash-message.info {
+    background-color: #2196F3;
+    /* blue */
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+  }
+</style>
+{% if messages %}
+<div id="message-container" class="alert alert-danger">
+  {% for message in messages %}
+  <div class="flash-message {{ message.tags }}">
+    {{ message }}
+    <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+<div class="login-background">
+  <div class="login-container">
+    <div class="login-left">
+      <h1 class="nepali-text">हाम्रो कृषि</h1>
+      <p>Welcome to Hamro Krishi</p>
+    </div>
+
+    <form class="modal-content animate" method="post" action="/shop/login/">
+      {% csrf_token %}
+      <input type="text" placeholder="Username" required name="loginusername" id="loginusername" />
+      <input type="password" placeholder="Password" id="loginpassword" name="loginpassword" required />
+      <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
+      <button type="submit" class="login-btn">Login</button>
+      <a href="/shop/signup/" class="create-account-btn">
+        Create an Account
+      </a>
+    </form>
+  </div>
+</div>
+<footer>
+  &copy; 2025 Crop AI. All rights reserved.
+</footer>
+{%endblock%}
+<script>
+
+  setTimeout(() => {
+    const container = document.getElementById('message-container');
+    if (container) {
+      container.style.display = 'none';
+    }
+  }, 3000);
+</script>
