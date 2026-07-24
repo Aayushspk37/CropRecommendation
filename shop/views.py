@@ -5,8 +5,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as ln, logout
 from django.contrib import messages
+from django.http import JsonResponse
 import joblib
 import os
+import warnings
+
+# Suppress scikit-learn version warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 # Global variables - initialized as None
 _model = None
@@ -23,6 +28,11 @@ def load_models():
             SCALER_PATH = os.path.join(settings.BASE_DIR, 'models', 'scaler.pkl')
             LABEL_ENCODER_PATH = os.path.join(settings.BASE_DIR, 'models', 'label_encoder.pkl')
             
+            # Check if model files exist
+            if not os.path.exists(MODEL_PATH):
+                print(f"❌ Model file not found: {MODEL_PATH}")
+                return None, None, None
+            
             _model = joblib.load(MODEL_PATH)
             _scaler = joblib.load(SCALER_PATH)
             _label_encoder = joblib.load(LABEL_ENCODER_PATH)
@@ -36,31 +46,42 @@ def load_models():
     return _model, _scaler, _label_encoder
 
 def index(request):
+    """Home page view"""
     return render(request, 'shop/index.html')
 
 def about(request):
+    """About page view"""
     return render(request, 'shop/about.html')
 
 def home(request):
+    """Home page view"""
     return render(request, 'shop/home.html')
 
 def terms(request):
+    """Terms and conditions page view"""
     return render(request, 'shop/terms.html')
 
 def result(request):
+    """Result page view"""
     return render(request, 'shop/result.html')
 
 @login_required
 def recommendation_history(request):
+    """View user's crop recommendation history"""
     history = crop_recommend.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'shop/history.html', {'history': history})
 
 def user_contact(request):
+    """Handle contact form submissions"""
     if request.method == "POST":
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         phone = request.POST.get('phone', '')
         desc = request.POST.get('desc', '')
+        
+        if not all([name, email, desc]):
+            messages.error(request, "Name, Email, and Message are required.")
+            return render(request, 'shop/contactus.html')
         
         ncontact = contact(name=name, email=email, phone=phone, desc=desc)
         ncontact.save()
@@ -70,6 +91,7 @@ def user_contact(request):
 
 @login_required
 def Crop_recommend(request):
+    """Crop recommendation service with ML model"""
     crop = None
     crop_detail = None
     history = crop_recommend.objects.filter(user=request.user).order_by('-timestamp')
@@ -84,20 +106,29 @@ def Crop_recommend(request):
             return render(request, 'shop/service.html', {'history': history})
         
         try:
-            N = float(request.POST.get('N'))
-            P = float(request.POST.get('P'))
-            K = float(request.POST.get('K'))
-            temperature = float(request.POST.get('temperature'))
-            humidity = float(request.POST.get('humidity'))
-            pH = float(request.POST.get('pH'))
-            rainfall = float(request.POST.get('rainfall'))
-
+            # Get form data
+            N = float(request.POST.get('N', 0))
+            P = float(request.POST.get('P', 0))
+            K = float(request.POST.get('K', 0))
+            temperature = float(request.POST.get('temperature', 0))
+            humidity = float(request.POST.get('humidity', 0))
+            pH = float(request.POST.get('pH', 0))
+            rainfall = float(request.POST.get('rainfall', 0))
+            
+            # Validate input ranges
+            if N < 0 or P < 0 or K < 0 or temperature < -50 or temperature > 60:
+                messages.error(request, "Please enter valid values within acceptable ranges.")
+                return render(request, 'shop/service.html', {'history': history})
+            
+            # Prepare features
             features = [[N, P, K, temperature, humidity, pH, rainfall]]
             features_scaled = scaler.transform(features)
-
+            
+            # Make prediction
             pred_encoded = model.predict(features_scaled)[0]
             crop = label_encoder.inverse_transform([pred_encoded])[0]
             
+            # Save to history
             crop_recommend.objects.create(
                 user=request.user,
                 nitrogen=N,
@@ -110,11 +141,15 @@ def Crop_recommend(request):
                 predicted_crop=crop
             )
             
+            # Get crop details
             try:
                 crop_detail = CropDetail.objects.get(name__iexact=crop)
             except CropDetail.DoesNotExist:
                 crop_detail = None
 
+        except ValueError as e:
+            crop = f"Error: Invalid input values"
+            messages.error(request, f"Please enter valid numeric values: {str(e)}")
         except Exception as e:
             crop = f"Error: {e}"
             messages.error(request, f"Prediction error: {str(e)}")
@@ -134,24 +169,45 @@ def Crop_recommend(request):
     return render(request, 'shop/service.html', context)
 
 def user_login(request):
+    """User login view"""
     # If user is already logged in, redirect to service
     if request.user.is_authenticated:
+        messages.info(request, f"You are already logged in as {request.user.username}")
         return redirect('shop:service')
     
     if request.method == 'POST':
-        loginusername = request.POST.get('loginusername', '')
-        loginpassword = request.POST.get('loginpassword', '')
+        loginusername = request.POST.get('loginusername', '').strip()
+        loginpassword = request.POST.get('loginpassword', '').strip()
         
         if not loginusername or not loginpassword:
             messages.error(request, "Please enter both username and password.")
             return redirect('shop:login')
         
+        # Check if user exists
+        try:
+            user_exists = User.objects.filter(username=loginusername).exists()
+            if not user_exists:
+                messages.error(request, 'Invalid Credentials. Please Enter Valid Credentials.')
+                return redirect('shop:login')
+        except Exception:
+            messages.error(request, 'Invalid Credentials. Please Enter Valid Credentials.')
+            return redirect('shop:login')
+        
+        # Authenticate user
         user = authenticate(request, username=loginusername, password=loginpassword)
         
         if user is not None:
             ln(request, user)
-            messages.success(request, f"Successfully Logged In. Welcome {user.username}!")
-            return redirect('shop:service')
+            # Set session to persist
+            request.session.set_expiry(1209600)  # 2 weeks
+            
+            # Check if user is active
+            if user.is_active:
+                messages.success(request, f"Successfully Logged In. Welcome {user.username}!")
+                return redirect('shop:service')
+            else:
+                messages.error(request, "Your account is disabled. Please contact support.")
+                return redirect('shop:login')
         else:
             messages.error(request, 'Invalid Credentials. Please Enter Valid Credentials.')
             return redirect('shop:login')
@@ -159,21 +215,23 @@ def user_login(request):
     return render(request, 'shop/login.html')
 
 def user_logout(request):
-    if request.method == 'POST':
-        logout(request)
-        messages.success(request, "You have been logged out successfully.")
-        return redirect('shop:login')
-    # If GET request, still logout
+    """User logout view - handles both GET and POST requests"""
+    # Clear session data completely
+    request.session.flush()
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect('shop:login')
 
 def user_signup(request):
+    """User registration view"""
+    if request.user.is_authenticated:
+        return redirect('shop:service')
+    
     if request.method == 'POST':
-        username = request.POST.get('username', '')
-        fname = request.POST.get('fname', '')
-        lname = request.POST.get('lname', '')
-        email = request.POST.get('email', '')
+        username = request.POST.get('username', '').strip()
+        fname = request.POST.get('fname', '').strip()
+        lname = request.POST.get('lname', '').strip()
+        email = request.POST.get('email', '').strip()
         password1 = request.POST.get('password1', '')
         password2 = request.POST.get('password2', '')
         
@@ -184,6 +242,10 @@ def user_signup(request):
         
         if len(username) < 3:
             messages.error(request, 'Username must be at least 3 characters long')
+            return redirect('shop:signup')
+        
+        if len(username) > 30:
+            messages.error(request, 'Username must be less than 30 characters')
             return redirect('shop:signup')
         
         if not username.isalnum():
@@ -209,7 +271,11 @@ def user_signup(request):
             return redirect('shop:signup')
         
         try:
-            myuser = User.objects.create_user(username=username, email=email, password=password1)
+            myuser = User.objects.create_user(
+                username=username, 
+                email=email, 
+                password=password1
+            )
             myuser.first_name = fname
             myuser.last_name = lname
             myuser.save()
@@ -224,6 +290,7 @@ def user_signup(request):
 
 @login_required
 def delete_history(request):
+    """Delete user's crop recommendation history"""
     if request.method == 'POST':
         if 'delete_all' in request.POST:
             deleted_count, _ = crop_recommend.objects.filter(user=request.user).delete()
@@ -243,3 +310,22 @@ def delete_history(request):
             else:
                 messages.error(request, "Invalid history ID.")
     return redirect('shop:history')
+
+# Debug view - optional, remove in production
+def debug_models(request):
+    """Debug view to check model loading status"""
+    if not request.user.is_staff:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+    
+    model, scaler, label_encoder = load_models()
+    
+    import numpy as np
+    return JsonResponse({
+        'model_loaded': model is not None,
+        'scaler_loaded': scaler is not None,
+        'label_encoder_loaded': label_encoder is not None,
+        'numpy_version': np.__version__,
+        'joblib_version': joblib.__version__,
+        'model_path': os.path.join(settings.BASE_DIR, 'models', 'model.pkl'),
+        'scikit_learn_version': __import__('sklearn').__version__
+    })
