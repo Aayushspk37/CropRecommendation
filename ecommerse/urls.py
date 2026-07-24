@@ -5,8 +5,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('shop.urls')),           # Handles /service/, /login/, etc.
-    path('shop/', include('shop.urls')),      # Handles /shop/service/, /shop/login/, etc.
+    path('', include('shop.urls')),  # ✅ Keep only this one
+    # path('shop/', include('shop.urls')),  # ❌ REMOVE this duplicate
 ]
 
 if settings.DEBUG:

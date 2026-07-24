@@ -1,0 +1,149 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #228B22;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+nav {
+    background-color: #2E8B57;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background-color: #3CB371;
+}
+
+.container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+form input, form button {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+button {
+    background-color: #228B22;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1e7e34;
+}
+
+footer {
+    background-color: #2E8B57;
+    text-align: center;
+    color: white;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.register-background {
+  background-image: url("static/shop/agricl.png"); 
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-container {
+  background: rgba(0, 128, 0, 0.3);
+  backdrop-filter: blur(8px);
+  padding: 40px 60px;
+  border-radius: 12px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.register-left {
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  text-align: center;
+}
+
+.nepali-text {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 300px;
+}
+
+.modal-content.animate input {
+  padding: 12px 16px;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.modal-content.animate input::placeholder {
+  color: #eee;
+}
+
+.register-btn {
+  padding: 12px;
+  border-radius: 30px;
+  background-color: #065f2c;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background-color: #044e25;
+}
+
+.login-link {
+  color: #eee;
+  font-size: 13px;
+  text-align: center;
+}
+
+.login-link a {
+  color: #bfffcf;
+  text-decoration: underline;
+}

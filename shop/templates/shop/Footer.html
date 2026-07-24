@@ -5,15 +5,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <title>Footer</title>
 </head>
+
 <style>
   .footer {
     background-color: rgb(225, 243, 225);
     padding: 40px 30px 20px;
     font-family: Arial, sans-serif;
     color: #333;
+    margin-top: auto;
+    width: 100%;
   }
 
   /* Inner layout container */
@@ -22,6 +24,8 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   /* Each footer section */
@@ -36,7 +40,6 @@
     font-weight: bold;
     margin-bottom: 15px;
     color: rgb(3, 110, 3);
-
   }
 
   /* Paragraph text */
@@ -93,6 +96,18 @@
     color: #666;
     border-top: 1px solid #ccc;
     padding-top: 15px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-bottom-bar a {
+    color: green;
+    text-decoration: none;
+  }
+
+  .footer-bottom-bar a:hover {
+    text-decoration: underline;
   }
 
   /* Responsive tweaks */
@@ -119,34 +134,41 @@
 
       <!-- Contact Section -->
       <div class="footer-section">
-        <h3 class="footer-title">Contact Us</h3>
-        <p class="footer-text">Email: hamrokrishi@gmail.com</p>
-        <p class="footer-text">Phone: +977-9800000000</p>
-        <p class="footer-text">Address: Chitwan, Nepal</p>
+        <h3 class="footer-title">📞 Contact Us</h3>
+        <p class="footer-text">📧 Email: hamrokrishi@gmail.com</p>
+        <p class="footer-text">📱 Phone: +977-9800000000</p>
+        <p class="footer-text">📍 Address: Chitwan, Nepal</p>
       </div>
 
+      <!-- Quick Links Section -->
       <div class="footer-section">
-        <h3 class="footer-title">Quick Links</h3>
-        <a href="/shop/about/" class="footer-nav-link">About Us</a> <br>
-        <a href="/shop/service/" class="footer-nav-link">Our Services</a><br>
-        <a href="/shop/contactus/" class="footer-nav-link">Contact Us</a>
+        <h3 class="footer-title">🔗 Quick Links</h3>
+        <!-- ✅ FIXED: Removed /shop/ prefix -->
+        <a href="/about/" class="footer-nav-link">About Us</a><br>
+        <a href="/service/" class="footer-nav-link">Our Services</a><br>
+        <a href="/contactus/" class="footer-nav-link">Contact Us</a><br>
+        <a href="/history/" class="footer-nav-link">History</a><br>
+        <a href="/terms/" class="footer-nav-link">Terms & Conditions</a>
       </div>
 
+      <!-- Social Media Section -->
       <div class="footer-section">
-        <h3 class="footer-title"> Follow Us</h3>
+        <h3 class="footer-title">🌐 Follow Us</h3>
         <div class="footer-social-links">
-          <a href="https://facebook.com" target="_blank" class="footer-social-link">Facebook</a>
-          <a href="https://twitter.com" target="_blank" class="footer-social-link">Twitter</a>
-          <a href="https://instagram.com" target="_blank" class="footer-social-link">Instagram</a>
+          <a href="https://facebook.com" target="_blank" class="footer-social-link">📘 Facebook</a>
+          <a href="https://twitter.com" target="_blank" class="footer-social-link">🐦 Twitter</a>
+          <a href="https://instagram.com" target="_blank" class="footer-social-link">📸 Instagram</a>
+          <a href="https://youtube.com" target="_blank" class="footer-social-link">▶️ YouTube</a>
         </div>
       </div>
 
     </div>
 
     <div class="footer-bottom-bar">
-      ©
-      <script>document.write(new Date().getFullYear())</script> Crop AI. All rights reserved.
-      <a href="/shop/terms/" style="color: green;">Terms & Privacy</a>
+      © <script>document.write(new Date().getFullYear())</script> हाम्रो कृषि (Hamro Krishi). All rights reserved.
+      <br>
+      <a href="/terms/">Terms & Privacy</a> | 
+      <a href="/contactus/">Contact Support</a>
     </div>
   </footer>
 </body>

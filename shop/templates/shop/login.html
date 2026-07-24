@@ -29,6 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 100vh;
   }
 
   .login-container {
@@ -166,7 +167,37 @@
     font-weight: bold;
     outline: none;
   }
+
+  .create-account-btn {
+    display: inline-block;
+    margin-top: 15px;
+    background-color: #ffffff33;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none !important;
+    transition: background 0.3s;
+    width: 100%;
+  }
+
+  .create-account-btn:hover {
+    background-color: #ffffff55;
+    text-decoration: none !important;
+  }
+
+  .text-sm {
+    font-size: 12px;
+  }
+
+  .text-blue-600 {
+    color: #90caf9;
+  }
+
+  .hover\:underline:hover {
+    text-decoration: underline;
+  }
 </style>
+
 {% if messages %}
 <div id="message-container" class="alert alert-danger">
   {% for message in messages %}
@@ -177,6 +208,7 @@
   {% endfor %}
 </div>
 {% endif %}
+
 <div class="login-background">
   <div class="login-container">
     <div class="login-left">
@@ -184,28 +216,40 @@
       <p>Welcome to Hamro Krishi</p>
     </div>
 
-    <form class="modal-content animate" method="post" action="/shop/login/">
+    <!-- ✅ FIXED: Changed action from /shop/login/ to /login/ -->
+    <form class="modal-content animate" method="post" action="/login/">
       {% csrf_token %}
       <input type="text" placeholder="Username" required name="loginusername" id="loginusername" />
       <input type="password" placeholder="Password" id="loginpassword" name="loginpassword" required />
-      <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
+      <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
       <button type="submit" class="login-btn">Login</button>
-      <a href="/shop/signup/" class="create-account-btn">
+      <!-- ✅ FIXED: Changed href from /shop/signup/ to /signup/ -->
+      <a href="/signup/" class="create-account-btn">
         Create an Account
       </a>
     </form>
   </div>
 </div>
+
 <footer>
   &copy; 2025 Crop AI. All rights reserved.
 </footer>
-{%endblock%}
-<script>
 
+<script>
+  // Auto-hide flash messages after 3 seconds
   setTimeout(() => {
     const container = document.getElementById('message-container');
     if (container) {
       container.style.display = 'none';
     }
   }, 3000);
+
+  // Close flash message on click
+  document.querySelectorAll('.close-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.parentElement.style.display = 'none';
+    });
+  });
 </script>
+
+{% endblock %}

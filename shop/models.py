@@ -1,8 +1,7 @@
+# shop/models.py
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
-# Create your models here.
 
 class CropDetail(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -15,12 +14,6 @@ class CropDetail(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'Crop Detail'
-        verbose_name_plural = 'Crop Details'
-
-
 class contact(models.Model):
     msg_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -30,12 +23,6 @@ class contact(models.Model):
     
     def __str__(self):
         return self.name
-
-    class Meta:
-        ordering = ['-msg_id']
-        verbose_name = 'Contact Message'
-        verbose_name_plural = 'Contact Messages'
-
 
 class crop_recommend(models.Model):
     recommend_id = models.AutoField(primary_key=True)
@@ -51,9 +38,4 @@ class crop_recommend(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
-        return f"{self.user.username} - {self.predicted_crop} - {self.timestamp.strftime('%Y-%m-%d')}"
-
-    class Meta:
-        ordering = ['-timestamp']
-        verbose_name = 'Crop Recommendation'
-        verbose_name_plural = 'Crop Recommendations'
+        return f"{self.user.username} - {self.predicted_crop}"

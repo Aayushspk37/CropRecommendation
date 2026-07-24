@@ -1,37 +1,79 @@
-{% extends 'shop/basic.html'%}
-{% block css%}
-.col-md-3
-{
-display: inline-block;
-margin-left:-4px;
-}
-.carousel-indicators .active {
-background-color: blue;
-}
-.col-md-3 img{
-width:100%;
-height:auto;
-}
-body .carousel-indicator li{
-background-color: blue;
-}
-body .carousel-indicators{
-bottom: 0;
-}
-body .carousel-control-prev-icon,
-body .carousel-control-next-icon{
-background-color: blue;
-}
-body .no-padding{
-padding-left: 0,
-padding-right: 0;
-}
-{% endblock%}
+{% extends 'shop/basic.html' %}
 
-{%block body%}
+{% block css %}
+<style>
+  .col-md-3 {
+    display: inline-block;
+    margin-left: -4px;
+  }
+
+  .carousel-indicators .active {
+    background-color: blue;
+  }
+
+  .col-md-3 img {
+    width: 100%;
+    height: auto;
+  }
+
+  body .carousel-indicator li {
+    background-color: blue;
+  }
+
+  body .carousel-indicators {
+    bottom: 0;
+  }
+
+  body .carousel-control-prev-icon,
+  body .carousel-control-next-icon {
+    background-color: blue;
+  }
+
+  body .no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Additional styles for better carousel display */
+  .carousel-item {
+    padding: 20px 0;
+  }
+
+  .card {
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .container h1 {
+    color: #2e7d32;
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: #198754 !important;
+    border-radius: 50%;
+    padding: 20px;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
 {% load static %}
+
 <div class="container">
-  <h1> this is index</h1> <br>
+  <h1>🌾 Welcome to Hamro Krishi</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">
+    Your trusted partner for smart crop recommendations
+  </p>
+
   <div id="demo" class="carousel slide my-3" data-ride="carousel">
     <ul class="carousel-indicators">
       <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -39,170 +81,173 @@ padding-right: 0;
       <li data-target="#demo" data-slide-to="2"></li>
     </ul>
 
-    <!--Slideshow starts here -->
+    <!-- Slideshow starts here -->
     <div class="container carousel-inner no-padding">
-
+      <!-- Slide 1 -->
       <div class="carousel-item active">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code1.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+        <div class="row">
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code1.jpg" %}' class="card-img-top" alt="Crop Image 1">
+              <div class="card-body">
+                <h5 class="card-title">Rice</h5>
+                <p class="card-text">A staple grain crop grown widely in warm, wet environments.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code2.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code2.jpg" %}' class="card-img-top" alt="Crop Image 2">
+              <div class="card-body">
+                <h5 class="card-title">Maize</h5>
+                <p class="card-text">A cereal crop used for food and fodder.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code3.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code3.jpg" %}' class="card-img-top" alt="Crop Image 3">
+              <div class="card-body">
+                <h5 class="card-title">Wheat</h5>
+                <p class="card-text">A staple food crop grown in temperate regions.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code4.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="carousel-item">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code5.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code1.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code5.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code1.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code4.jpg" %}' class="card-img-top" alt="Crop Image 4">
+              <div class="card-body">
+                <h5 class="card-title">Mango</h5>
+                <p class="card-text">Popular tropical fruit grown in summer.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Slide 2 -->
       <div class="carousel-item">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code2.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+        <div class="row">
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code5.jpg" %}' class="card-img-top" alt="Crop Image 5">
+              <div class="card-body">
+                <h5 class="card-title">Banana</h5>
+                <p class="card-text">Tropical fruit grown year-round in humid climates.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code1.jpg" %}' class="card-img-top" alt="Crop Image 6">
+              <div class="card-body">
+                <h5 class="card-title">Cotton</h5>
+                <p class="card-text">Fiber crop used in textile industry.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code5.jpg" %}' class="card-img-top" alt="Crop Image 7">
+              <div class="card-body">
+                <h5 class="card-title">Coffee</h5>
+                <p class="card-text">Commercial beverage crop grown in hilly areas.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code1.jpg" %}' class="card-img-top" alt="Crop Image 8">
+              <div class="card-body">
+                <h5 class="card-title">Jute</h5>
+                <p class="card-text">Bast fiber crop used for making sacks and ropes.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code3.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+      <!-- Slide 3 -->
+      <div class="carousel-item">
+        <div class="row">
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code2.jpg" %}' class="card-img-top" alt="Crop Image 9">
+              <div class="card-body">
+                <h5 class="card-title">Apple</h5>
+                <p class="card-text">Temperate fruit grown in cold regions.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code4.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code3.jpg" %}' class="card-img-top" alt="Crop Image 10">
+              <div class="card-body">
+                <h5 class="card-title">Grapes</h5>
+                <p class="card-text">Fruit crop grown in dry temperate regions.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 18rem;">
-            <img src='{% static "shop/code2.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code4.jpg" %}' class="card-img-top" alt="Crop Image 11">
+              <div class="card-body">
+                <h5 class="card-title">Orange</h5>
+                <p class="card-text">Citrus fruit rich in vitamin C.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src='{% static "shop/code2.jpg" %}' class="card-img-top" alt="Crop Image 12">
+              <div class="card-body">
+                <h5 class="card-title">Papaya</h5>
+                <p class="card-text">Fast-growing fruit crop with high nutritional value.</p>
+                <a href="/service/" class="btn btn-success">Learn More</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
   </div>
 
-  <h>hi <h>
-      <!-- left and right controls for the slide -->
-      <a class="carousel-control-prev" href="#demo" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </a>
-      <a class="carousel-control-next" href="#demo" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </a>
-      {% endblock %}
+  <!-- Call to Action -->
+  <div style="text-align: center; margin: 40px 0; padding: 30px; background-color: #f0f8f0; border-radius: 10px;">
+    <h2 style="color: #2e7d32;">Ready to Get Started?</h2>
+    <p style="color: #666; margin-bottom: 20px;">
+      Get personalized crop recommendations based on your soil and climate conditions.
+    </p>
+    <a href="/service/" class="btn btn-success btn-lg">Get Recommendation Now</a>
+  </div>
+</div>
+
+{% endblock %}

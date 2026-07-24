@@ -1,19 +1,16 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Home - Crop Recommendation</title>
-  {% comment %}
-  <link rel="stylesheet" href="/static/css/base.css"> {% endcomment %}
+  <title>About Us - Crop Recommendation</title>
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
-
 
 <style>
   html,
@@ -24,12 +21,13 @@
     overflow-x: hidden;
     overflow-y: auto;
     scroll-behavior: smooth;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
   }
 
   /* General navbar style */
   .navbar-green {
     background-color: #198754;
-    /* Bootstrap green */
     padding: 0.75rem 1.5rem;
     display: flex;
     align-items: center;
@@ -44,10 +42,8 @@
     font-weight: 700;
     margin: 0;
     font-family: 'Khand', sans-serif;
-    /* or any Nepali-supporting font */
   }
 
-  /* Nav items */
   .navbar-green .navbar-nav {
     display: flex;
     gap: 1rem;
@@ -56,7 +52,6 @@
     padding: 0;
   }
 
-  /* Individual nav link */
   .navbar-green .nav-link {
     color: #ffffff;
     font-size: 1rem;
@@ -72,7 +67,6 @@
     color: #e0f2f1;
   }
 
-  /*for mobile */
   .navbar-toggler {
     background-color: rgb(78, 126, 78);
     border: 5;
@@ -82,7 +76,6 @@
     display: none;
   }
 
-  /* Responsive collapse */
   @media (max-width: 768px) {
     .navbar-green {
       flex-direction: column;
@@ -106,48 +99,6 @@
     }
   }
 
-  .welcome-container {
-    background-color: rgb(235, 228, 228);
-    padding: 40px;
-    margin: 5px auto;
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(199, 250, 215, 0.1);
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-
-  .welcome-container p {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 10px;
-
-
-  }
-
-  .welcome-container a {
-    color: rgb(168, 239, 199);
-    font-weight: bold;
-    text-decoration: none;
-
-  }
-
-  .welcome-container a:hover {
-    text-decoration: underline;
-  }
-
-  .btn-primary {
-    padding: 0.75rem 2rem;
-    background-color: rgb(23, 141, 64);
-    color: white;
-    border-radius: 10px;
-    font-size: 1rem;
-    margin: 10px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    text-decoration: none;
-  }
-
   .welcome-user {
     color: #e0f2f1;
     font-weight: 600;
@@ -167,8 +118,8 @@
 
   .hero-container {
     position: relative;
-    height: 500px;
-    background-image: url({%static "shop/agricl.png"%});
+    height: 400px;
+    background-image: url({% static "shop/agricl.png" %});
     background-size: cover;
     background-position: center;
     display: flex;
@@ -184,33 +135,21 @@
     color: white;
   }
 
-  .subheading,
-  .heading {
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    animation-direction: alternate;
-  }
-
-  /* Subheading bounces */
   .subheading {
-    animation-name: bounceSub;
+    animation: bounceSub 2s ease-in-out infinite alternate;
     color: rgb(228, 232, 228);
   }
 
-  /* Heading slides */
   .heading {
-    animation-name: slideHeading;
+    animation: slideHeading 2s ease-in-out infinite alternate;
     color: rgb(228, 232, 228);
   }
 
-  /* Keyframes */
   @keyframes bounceSub {
     0% {
       transform: translateY(0);
       opacity: 1;
     }
-
     100% {
       transform: translateY(-10px);
       opacity: 0.8;
@@ -222,34 +161,10 @@
       transform: translateX(0);
       opacity: 1;
     }
-
     100% {
       transform: translateX(20px);
       opacity: 0.8;
     }
-  }
-
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f9f9f9;
-    padding: 0px;
-    margin: 0;
-    font-weight: bold;
-  }
-
-  h1 {
-    text-align: center;
-    color: #333;
-  }
-
-  .highlight {
-    color: #f68b1e;
-  }
-
-  .subtitle {
-    text-align: center;
-    color: white;
-    margin-bottom: 40px;
   }
 
   .container {
@@ -262,8 +177,6 @@
     min-height: auto;
     box-sizing: border-box;
     box-shadow: 0 4px 12px rgba(19, 140, 33, 0.1);
-
-
   }
 
   .card {
@@ -293,122 +206,55 @@
     color: #666;
   }
 
-
-  /* Footer main container */
-  .footer {
-    background-color: rgb(225, 243, 225);
-    padding: 40px 30px 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
-  }
-
-  /* Inner layout container */
-  .footer-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  /* Each footer section */
-  .footer-section {
-    flex: 1 1 220px;
-    margin-bottom: 20px;
-  }
-
-  /* Section titles */
-  .footer-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: rgb(3, 110, 3);
-
-  }
-
-  /* Paragraph text */
-  .footer-text {
-    margin: 6px 0;
-    font-size: 14px;
-    color: #444;
-    line-height: 1.6;
-  }
-
-  /* Navigation menu inside Quick Links */
-  .footer-nav-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .footer-nav-link {
+  .btn-primary {
+    padding: 0.75rem 2rem;
+    background-color: rgb(23, 141, 64);
+    color: white;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
     text-decoration: none;
-    color: rgb(37, 39, 37);
-    font-weight: bold;
-    font-size: 14px;
-    transition: color 0.3s ease;
+    display: inline-block;
   }
 
-  .footer-nav-link:hover {
-    color: green;
-  }
-
-  /* Social media links */
-  .footer-social-links {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .footer-social-link {
+  .btn-primary:hover {
+    background-color: #14532d;
+    color: white;
     text-decoration: none;
-    color: rgb(22, 30, 24);
+  }
+
+  .tet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    overflow: hidden;
+  }
+
+  .tet h1 {
+    font-size: 36px;
     font-weight: bold;
-    font-size: 14px;
-    transition: color 0.3s ease;
-  }
-
-  .footer-social-link:hover {
-    color: darkgreen;
-  }
-
-  /* Bottom bar */
-  .footer-bottom-bar {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 13px;
-    color: #666;
-    border-top: 1px solid #ccc;
-    padding-top: 15px;
-  }
-
-  /* Responsive tweaks */
-  @media (max-width: 768px) {
-    .footer-container {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .footer-section {
-      width: 100%;
-    }
-
-    .footer-social-links {
-      flex-direction: row;
-      gap: 15px;
-    }
-  }
-
-  body {
+    color: #009605;
     font-family: Arial, sans-serif;
-    background: #fff;
-    margin: 0;
-    padding: 0;
-    color: #000;
+    position: relative;
+    animation: moveText 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes moveText {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: 100px;
+    }
   }
 
   .team-section {
     text-align: center;
     padding: 50px 20px;
+    background-color: #f9f9f9;
   }
 
   .team-section h2 {
@@ -479,6 +325,7 @@
   .card-front .info p {
     font-weight: bold;
     color: #000;
+    margin: 5px 0 0;
   }
 
   .card-back {
@@ -502,92 +349,134 @@
     line-height: 1.4;
   }
 
-  .info {
-    padding: 15px;
-    text-align: left;
-  }
-
-  .info h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    color: #339aff;
-  }
-
-  div {
-    display: block;
-    unicode-bidi: isolate;
+  /* Footer styles */
+  .footer {
+    background-color: rgb(225, 243, 225);
+    padding: 40px 30px 20px;
     font-family: Arial, sans-serif;
-    color: white;
+    color: #333;
   }
 
-  .info p {
-    margin: 5px 0 0;
-    font-weight: bold;
-    color: #000;
-  }
-
-  .tet {
+  .footer-container {
     display: flex;
-    justify-content: center;
-    /* center horizontally */
-    align-items: center;
-    /* center vertically */
-    height: 100px;
-    /* height of the box */
-    /* light gray background */
-    overflow: hidden;
-    /* to keep the animation clean */
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 
-  .tet h1 {
-    font-size: 36px;
-    font-size: bold;
-    color: #009605;
-    /* dark green text */
-    font-family: Arial, sans-serif;
-    position: relative;
-    animation: moveText 3s ease-in-out infinite alternate;
+  .footer-section {
+    flex: 1 1 220px;
+    margin-bottom: 20px;
   }
 
-  /* Keyframes for left-right motion */
-  @keyframes moveText {
-    0% {
-      left: 0;
-    }
+  .footer-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: rgb(3, 110, 3);
+  }
 
-    100% {
-      left: 100px;
-      /* change distance as needed */
+  .footer-text {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  .footer-nav-link {
+    text-decoration: none;
+    color: rgb(37, 39, 37);
+    font-weight: bold;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  .footer-nav-link:hover {
+    color: green;
+  }
+
+  .footer-social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-social-link {
+    text-decoration: none;
+    color: rgb(22, 30, 24);
+    font-weight: bold;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  .footer-social-link:hover {
+    color: darkgreen;
+  }
+
+  .footer-bottom-bar {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: flex-start;
     }
+    .footer-section {
+      width: 100%;
+    }
+    .footer-social-links {
+      flex-direction: row;
+      gap: 15px;
+    }
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+    }
+  }
+
+  #flash-message {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 9999;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 </style>
 
 <body>
 
-
+  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-green">
     <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
-
-      <!-- Logo -->
       <a class="navbar-brand nepali-text text-white" href="#">हाम्रो कृषि</a>
-
-      <!-- Toggle button -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <!-- Navbar links + welcome -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item {% if request.path == '/shop/home/' %}active{% endif %}">
-            <a class="nav-link text-white" href="/shop/home/">Home</a>
+          <!-- ✅ FIXED: Removed /shop/ prefix -->
+          <li class="nav-item {% if request.path == '/home/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/home/">Home</a>
           </li>
-          <li class="nav-item {% if request.path == '/shop/service/' %}active{% endif %}">
-            <a class="nav-link text-white" href="/shop/service/">Services</a>
+          <li class="nav-item {% if request.path == '/service/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/service/">Services</a>
           </li>
-          <li class="nav-item {% if request.path == '/shop/contactus/' %}active{% endif %}">
-            <a class="nav-link text-white" href="/shop/contactus/">Contact Us</a>
+          <li class="nav-item {% if request.path == '/contactus/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/contactus/">Contact Us</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
@@ -595,17 +484,15 @@
               More
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/shop/history/">History</a></li>
-              <li><a class="dropdown-item" href="/shop/about/">About</a></li>
+              <li><a class="dropdown-item" href="/history/">History</a></li>
+              <li><a class="dropdown-item" href="/about/">About</a></li>
             </ul>
           </li>
-          <li class="nav-item {% if request.path == '/shop/login/' %}active{% endif %}">
-            <a class="nav-link text-white" href="/shop/login/">Logout</a>
+          <li class="nav-item {% if request.path == '/login/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/login/">Logout</a>
           </li>
         </ul>
       </div>
-
-      <!-- Welcome text (only if user is authenticated) -->
       {% if user.is_authenticated %}
       <span class="navbar-text welcome-user mt-2 mt-lg-0 ms-3">
         Welcome {{ request.user.username }}
@@ -613,6 +500,7 @@
       {% endif %}
     </div>
   </nav>
+
   <script>
     setTimeout(function () {
       var flash = document.getElementById('flash-message');
@@ -620,8 +508,8 @@
         flash.style.display = 'none';
       }
     }, 3000);
-
   </script>
+
   {% if messages %}
   <div id="flash-message" class="alert alert-success">
     {% for message in messages %}
@@ -632,7 +520,7 @@
   </div>
   {% endif %}
 
-
+  <!-- Hero Section -->
   <div class="hero-container">
     <div class="text-overlay">
       <h4 class="subheading">Welcome to Hamro Krishi</h4>
@@ -640,53 +528,39 @@
     </div>
   </div>
 
+  <!-- Services Section -->
   <div class="tet">
-    <h1> OUR SERVICES </h1>
+    <h1>🌾 OUR SERVICES</h1>
   </div>
-
 
   <div class="container">
     <div class="card">
       <h2>Crop Recommendation</h2>
-      <p>Recommend best crop according to climate</p> <br>
-
-
-
-      <a href="/shop/service/" class="btn-primary">Start Now &rarr;</a>
-
+      <p>Recommend best crop according to climate</p>
+      <!-- ✅ FIXED: Removed /shop/ prefix -->
+      <a href="/service/" class="btn-primary">Start Now &rarr;</a>
     </div>
     <div class="card">
       <h2>Hamro Market</h2>
       <p>Provides best market services</p>
-      <br>
-
-
-
-      <a href="" class="btn-primary">Start Now &rarr;</a>
-
+      <a href="#" class="btn-primary">Coming Soon &rarr;</a>
     </div>
     <div class="card">
       <h2>Fertilizer recommendation</h2>
       <p>Recommend best fertilizer as per soil conditions</p>
-
-
-      <br>
-
-      <a href="" class="btn-primary">Start Now &rarr;</a>
+      <a href="#" class="btn-primary">Coming Soon &rarr;</a>
     </div>
     <div class="card">
       <h2>Farmer-Expert Consultation</h2>
       <p>Acts as intermediate to connect with experts</p>
-      <br>
-
-
-      <a href="" class="btn-primary">Start Now &rarr;</a>
+      <a href="#" class="btn-primary">Coming Soon &rarr;</a>
     </div>
   </div>
-  <section class="team-section">
-    <h2>Meet Our Team</h2>
-    <div class="team-container">
 
+  <!-- Team Section -->
+  <section class="team-section">
+    <h2>👥 Meet Our Team</h2>
+    <div class="team-container">
       <div class="team-card">
         <div class="card-inner">
           <div class="card-front">
@@ -746,53 +620,50 @@
           </div>
           <div class="card-back">
             <h3>Yuresh</h3>
-            <p>Worked On Deployment Setup, UI Animations, And Admin Panel Features.
-            </p>
+            <p>Worked On Deployment Setup, UI Animations, And Admin Panel Features.</p>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
-
-
       <div class="footer-section">
-        <h3 class="footer-title">Contact Us</h3>
-        <p class="footer-text">Email: hamrokrishi@gmail.com</p>
-        <p class="footer-text">Phone: +977-1-1234567</p>
-        <p class="footer-text">Address: Chitwan, Nepal</p>
+        <h3 class="footer-title">📞 Contact Us</h3>
+        <p class="footer-text">📧 Email: hamrokrishi@gmail.com</p>
+        <p class="footer-text">📱 Phone: +977-1-1234567</p>
+        <p class="footer-text">📍 Address: Chitwan, Nepal</p>
       </div>
 
       <div class="footer-section">
-        <h3 class="footer-title">Quick Links</h3>
-        <a href="/shop/about/" class="footer-nav-link">About Us</a> <br>
-        <a href="/shop/service/" class="footer-nav-link">Our Services</a><br>
-        <a href="/shop/contactus/" class="footer-nav-link">Contact Us</a>
+        <h3 class="footer-title">🔗 Quick Links</h3>
+        <!-- ✅ FIXED: Removed /shop/ prefix -->
+        <a href="/about/" class="footer-nav-link">About Us</a><br>
+        <a href="/service/" class="footer-nav-link">Our Services</a><br>
+        <a href="/contactus/" class="footer-nav-link">Contact Us</a><br>
+        <a href="/terms/" class="footer-nav-link">Terms & Privacy</a>
       </div>
 
       <div class="footer-section">
-        <h3 class="footer-title"> Follow Us</h3>
+        <h3 class="footer-title">🌐 Follow Us</h3>
         <div class="footer-social-links">
-          <a href="https://facebook.com" target="_blank" class="footer-social-link">Facebook</a>
-          <a href="https://twitter.com" target="_blank" class="footer-social-link">Twitter</a>
-          <a href="https://instagram.com" target="_blank" class="footer-social-link">Instagram</a>
+          <a href="https://facebook.com" target="_blank" class="footer-social-link">📘 Facebook</a>
+          <a href="https://twitter.com" target="_blank" class="footer-social-link">🐦 Twitter</a>
+          <a href="https://instagram.com" target="_blank" class="footer-social-link">📸 Instagram</a>
         </div>
       </div>
-
     </div>
-
 
     <div class="footer-bottom-bar">
-      ©
-      <script>document.write(new Date().getFullYear())</script> Crop AI. All rights reserved.
-      <a href="/shop/terms/" style="color: green;">Terms & Privacy</a>
+      © <script>document.write(new Date().getFullYear())</script> हाम्रो कृषि (Hamro Krishi). All rights reserved.
+      <br>
+      <a href="/terms/" style="color: green;">Terms & Privacy</a>
     </div>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

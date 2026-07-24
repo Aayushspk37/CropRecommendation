@@ -1,12 +1,13 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Home - Crop Recommendation</title>
+  <title>Sign Up - Crop Recommendation</title>
 </head>
+
 <style>
   html,
   body {
@@ -15,6 +16,9 @@
     overflow-x: hidden;
     overflow-y: auto;
     scroll-behavior: smooth;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   * {
@@ -31,36 +35,34 @@
   }
 
   body::before {
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.2);
-      z-index: -1;
-    }
-
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    z-index: -1;
   }
 
   .container {
     display: flex;
     justify-content: center;
     padding: 40px 20px;
+    flex: 1;
   }
 
   .register-background {
-    background: rgba(210, 245, 205, 0.9);
-    /* Light green with 90% opacity */
+    background: rgba(210, 245, 205, 0.92);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-radius: 12px;
     padding: 40px 30px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    color: rgb(10, 11, 10)
+    color: rgb(10, 11, 10);
+    width: 100%;
+    max-width: 500px;
   }
-
 
   .register-left {
     text-align: center;
@@ -70,10 +72,8 @@
   .register-left h1.nepali-text {
     font-size: 2rem;
     color: #065f2c;
-    /* Dark green for strong contrast */
     margin-bottom: 10px;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.4);
-    /* Soft white shadow */
   }
 
   .register-left p {
@@ -82,7 +82,6 @@
     font-weight: 500;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.4);
   }
-
 
   form {
     display: flex;
@@ -94,17 +93,19 @@
   form label {
     font-size: 14px;
     margin-bottom: 5px;
-
     font-weight: 500;
+    color: #065f2c;
   }
 
   form input[type="text"],
-  form input[type="password"] {
+  form input[type="password"],
+  form input[type="email"] {
     padding: 12px 14px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
+    width: 100%;
   }
 
   form input[type="checkbox"] {
@@ -126,6 +127,8 @@
     border-radius: 6px;
     cursor: pointer;
     width: 48%;
+    text-decoration: none;
+    text-align: center;
   }
 
   .signupbtn {
@@ -137,15 +140,6 @@
     background-color: #388e3c;
   }
 
-  .email {
-    padding: 12px 14px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-
-  }
-
   .cancelbtn {
     background-color: #f44336;
     color: white;
@@ -153,6 +147,12 @@
 
   .cancelbtn:hover {
     background-color: #d32f2f;
+  }
+
+  .cancelbtn a {
+    color: white;
+    text-decoration: none;
+    display: block;
   }
 
   .login-link {
@@ -191,97 +191,166 @@
     color: white;
     text-align: center;
     padding: 10px;
-    font-size: 14;
+    font-size: 14px;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-
     width: 100%;
     bottom: 0;
     left: 0;
+    margin-top: auto;
   }
 
   footer p {
     margin: 0;
     letter-spacing: 0.5px;
   }
-</style>
 
+  footer a {
+    color: white;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  .terms-link {
+    color: dodgerblue;
+    text-decoration: none;
+  }
+
+  .terms-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Flash messages */
+  .flash-message {
+    padding: 15px 20px;
+    margin: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+  }
+
+  .flash-message.success {
+    background-color: #4caf50;
+  }
+
+  .flash-message.error {
+    background-color: #f44336;
+  }
+
+  .flash-message.info {
+    background-color: #2196f3;
+  }
+
+  .flash-message.warning {
+    background-color: #ff9800;
+  }
+
+  @media (max-width: 480px) {
+    .register-background {
+      padding: 25px 20px;
+    }
+
+    .clearfix {
+      flex-direction: column;
+    }
+
+    .signupbtn,
+    .cancelbtn {
+      width: 100%;
+    }
+  }
+</style>
 
 <body>
 
-  {%block body%}
+  {% block body %}
+  <!-- Flash Messages -->
   {% if messages %}
-  <ul style="list-style:none; padding:0;">
+  <div id="flash-message-container">
     {% for message in messages %}
-    <li style="padding: 10px; margin-bottom: 10px; 
-                 border-radius: 5px;
-                 color: white;
-                 background-color: 
-                   {% if message.tags == 'success' %}green
-                   {% elif message.tags == 'error' %}red
-                   {% else %}gray
-                   {% endif %};">
+    <div class="flash-message {{ message.tags }}">
       {{ message }}
-    </li>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
   {% endif %}
+
   <script>
     setTimeout(function () {
-      var flash = document.getElementById('flash-message');
-      if (flash) {
-        flash.style.display = 'none';
+      var container = document.getElementById('flash-message-container');
+      if (container) {
+        container.style.display = 'none';
       }
-    }, 3000);
+    }, 5000);
   </script>
+
   <div class="container">
     <div class="register-background">
       <div class="register-container">
         <div class="register-left">
-          <h1 class="nepali-text">हाम्रो कृषि</h1>
+          <h1 class="nepali-text">🌾 हाम्रो कृषि</h1>
           <p>Join Hamro Krishi today</p>
         </div>
 
-        <form class="modal-content animate" action="{% url 'shop:signup' %}" method="post"
-          style="border:1px solid #ccc">
+        <!-- ✅ FIXED: action uses 'shop:signup' URL name -->
+        <form class="modal-content animate" action="{% url 'shop:signup' %}" method="post" style="border:1px solid #ccc">
           {% csrf_token %}
+
           <label for="fname"><b>First Name</b></label>
           <input type="text" placeholder="Enter First Name" id="fname" name="fname" required>
+
           <label for="lname"><b>Last Name</b></label>
           <input type="text" placeholder="Enter Last Name" id="lname" name="lname" required>
+
           <label for="username"><b>Username</b></label>
           <input type="text" placeholder="Enter username" id="username" name="username" required>
+
           <label for="email"><b>Email</b></label>
           <input type="email" class="email" placeholder="Enter Email" id="email" name="email" required>
 
-          <label for="psw"><b>Password</b></label>
+          <label for="password1"><b>Password</b></label>
           <input type="password" placeholder="Enter Password" id="password1" name="password1" required>
 
-          <label for="psw-repeat"><b>Repeat Password</b></label>
+          <label for="password2"><b>Repeat Password</b></label>
           <input type="password" placeholder="Repeat Password" id="password2" name="password2" required>
 
           <label>
             <input type="checkbox" name="remember" style="margin-bottom:15px"> Remember me
           </label>
 
-          <p>By creating an account you agree to our <a href="/shop/terms/" style="color:dodgerblue">Terms &
-              Privacy</a>.</p>
+          <p>
+            By creating an account you agree to our 
+            <!-- ✅ FIXED: Removed /shop/ prefix -->
+            <a href="/terms/" class="terms-link">Terms &amp; Privacy</a>.
+          </p>
 
           <div class="clearfix">
-            <button type="button" class="cancelbtn"> <a href="/shop/home/" style="color:white">Cancel</button></a>
+            <!-- ✅ FIXED: Removed /shop/ prefix -->
+            <button type="button" class="cancelbtn"><a href="/home/">Cancel</a></button>
             <button type="submit" class="signupbtn">Sign Up</button>
-
           </div>
-          <p className="login-link">
-            Already have an account? <a href="/shop/login/">Login</a>
-          </p>
-      </div>
-      </form>
-    </div>
 
+          <div class="login-link">
+            Already have an account? 
+            <!-- ✅ FIXED: Removed /shop/ prefix -->
+            <a href="/login/">Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
   <footer>
-    <p>&copy; 2025 Crop AI. All rights reserved. <a href="/shop/terms/" style="color:white">Terms &
-        Privacy</a> </p>
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> हाम्रो कृषि (Hamro Krishi). All rights reserved.
+      <br>
+      <!-- ✅ FIXED: Removed /shop/ prefix -->
+      <a href="/terms/">Terms &amp; Privacy</a>
+    </p>
   </footer>
 
-  {%endblock%}
+  {% endblock %}
+</body>
+
+</html>

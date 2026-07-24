@@ -32,32 +32,28 @@
       <!-- Navbar links -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <!-- Home link -->
-          <li class="nav-item {% if request.path == '/shop/home/' %}active{% endif %}">
-            <a class="nav-link text-white" href="/shop/home/">Home</a>
+          <!-- ✅ FIXED: Removed /shop/ prefix -->
+          <li class="nav-item {% if request.path == '/home/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/home/">Home</a>
           </li>
-          <!-- Services link -->
-          <li class="nav-item {% if request.path == '/shop/service/' %}active{% endif %}">
-            <a class="nav-link text-white" href="/shop/service/">Services</a>
+          <li class="nav-item {% if request.path == '/service/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/service/">Services</a>
           </li>
-          <!-- Contact Us link -->
-          <li class="nav-item {% if request.path == '/shop/contactus/' %}active{% endif %}">
-            <a class="nav-link text-white" href="/shop/contactus/">Contact Us</a>
+          <li class="nav-item {% if request.path == '/contactus/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/contactus/">Contact Us</a>
           </li>
-          <!-- Dropdown menu -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               More
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/shop/history/">History</a></li>
-              <li><a class="dropdown-item" href="/shop/about/">About</a></li>
+              <li><a class="dropdown-item" href="/history/">History</a></li>
+              <li><a class="dropdown-item" href="/about/">About</a></li>
             </ul>
           </li>
-          <!-- Logout link -->
-          <li class="nav-item {% if request.path == '/shop/login/' %}active{% endif %}">
-            <a class="nav-link text-white" href="/shop/login/">Logout</a>
+          <li class="nav-item {% if request.path == '/login/' %}active{% endif %}">
+            <a class="nav-link text-white" href="/login/">Logout</a>
           </li>
         </ul>
       </div>
@@ -86,14 +82,15 @@
 
   <!-- Main form wrapper -->
   <div>
-    <form method="post" action="/shop/service/" id="cropForm" class="form-style">
+    <!-- ✅ FIXED: Removed /shop/ prefix from action -->
+    <form method="post" action="/service/" id="cropForm" class="form-style">
       {% csrf_token %}
       <!-- Wrapper div with background image -->
       <div class="wrapper">
         <div class="container">
           <!-- Header text -->
           <h2 class="header">
-            Enter your soil and climate parameters to get personalized crop recommendations
+            🌾 Enter your soil and climate parameters to get personalized crop recommendations
           </h2>
 
           <!-- Grid layout for input fields -->
@@ -163,7 +160,7 @@
 
           <!-- Submit button -->
           <div class="content-center">
-            <button type="submit" id="submitBtn">Get Recommendation</button>
+            <button type="submit" id="submitBtn">🌾 Get Recommendation</button>
           </div>
 
           <!-- Display crop details if available -->
@@ -176,10 +173,10 @@
                    class="crop-image"
                    onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div class=\'no-image-placeholder\'><span>🌾</span><p>{{ crop_detail.name|title }} image coming soon</p></div>';">
             </div>
-            <p><strong>Description:</strong> {{ crop_detail.description }}</p>
-            <p><strong>Best Season:</strong> {{ crop_detail.best_season }}</p>
-            <p><strong>Common Pests & Diseases:</strong> {{ crop_detail.common_pests_diseases }}</p>
-            <p><strong>Recommended Fertilizer:</strong> {{ crop_detail.recommended_fertilizer }}</p>
+            <p><strong>📝 Description:</strong> {{ crop_detail.description }}</p>
+            <p><strong>📅 Best Season:</strong> {{ crop_detail.best_season }}</p>
+            <p><strong>🐛 Common Pests & Diseases:</strong> {{ crop_detail.common_pests_diseases }}</p>
+            <p><strong>🧪 Recommended Fertilizer:</strong> {{ crop_detail.recommended_fertilizer }}</p>
           </div>
           {% endif %}
 
@@ -452,6 +449,10 @@
     color: white;
     border-radius: 8px;
     cursor: pointer;
+  }
+
+  #submitBtn:hover {
+    background-color: #1e7e34;
   }
 
   /* Centered button container */
