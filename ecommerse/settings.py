@@ -140,3 +140,12 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hamrokrishi.org@gmail.com'
 EMAIL_HOST_PASSWORD = 'snuc gyvx jlnk bwoo'
 DEFAULT_FROM_EMAIL = 'हाम्रो कृषि Support <hamrokrishi.org@gmail.com>'
+
+# Session settings
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_SAVE_EVERY_REQUEST = True  # Important for session refresh
