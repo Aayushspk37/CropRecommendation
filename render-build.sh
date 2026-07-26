@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-# exit on error
 set -o errexit
 
 echo "🚀 Starting build process..."
@@ -11,6 +9,10 @@ pip install --upgrade pip
 # Install dependencies
 echo "📦 Installing Python packages..."
 pip install -r requirements.txt
+
+# Create database tables
+echo "🗄️ Applying database migrations..."
+python manage.py migrate
 
 # Collect static files for Django
 echo "📁 Collecting static files..."
